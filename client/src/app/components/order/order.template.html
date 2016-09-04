@@ -1,0 +1,126 @@
+<div class="anim-zoom-in">
+
+  <md-content class="md-padding">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Новый заказ</span>
+        </md-card-title-text>
+      </md-card-title>
+      <form name="orderForm" ng-submit="$ctrl.addOrder()">
+        <md-card-content>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Имя</label>
+              <input maxlength="30"
+                     required
+                     md-no-asterisk
+                     name="clientName"
+                     ng-model="$ctrl.order.client.name">
+              <div ng-messages="orderForm.clientName.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label class="active">Телефон</label>
+              <input md-no-asterisk
+                     required
+                     ui-mask="+7 (999) 999-9999"
+                     ui-mask-placeholder
+                     ui-options="{addDefaultPlaceholder: false}"
+                     name="clientPhone"
+                     ng-model="$ctrl.order.client.phone">
+              <div ng-messages="orderForm.clientPhone.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Адрес вывоза</label>
+              <input maxlength="60"
+                     required
+                     md-no-asterisk
+                     name="addressFrom"
+                     ng-model="$ctrl.order.addressFrom">
+              <div ng-messages="orderForm.addressFrom.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Адрес доставки</label>
+              <input maxlength="60"
+                     required
+                     md-no-asterisk
+                     name="addressTo"
+                     ng-model="$ctrl.order.addressTo">
+              <div ng-messages="orderForm.addressTo.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <md-datepicker ng-model="$ctrl.order.dateFrom"
+                             md-placeholder="Дата вывоза"
+                             md-open-on-focus></md-datepicker>
+              <div ng-messages="orderForm.dateFrom.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <md-datepicker ng-model="$ctrl.order.dateTo"
+                             md-placeholder="Дата доставки"
+                             md-open-on-focus></md-datepicker>
+              <div ng-messages="orderForm.dateTo.$error" role="alert">
+                <div ng-message="required">Обязательно к заполнению.</div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <md-chips ng-model="$ctrl.order.items" md-autocomplete-snap
+                        md-transform-chip="$ctrl.transformItem($chip)"
+                        md-require-match=true>
+                <md-autocomplete
+                  md-selected-item="$ctrl.selectedItem"
+                  md-search-text="$ctrl.searchText"
+                  md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                  md-item-text="item.name"
+                  placeholder="Добавить позицию">
+                  <span md-highlight-text="$ctrl.searchText">{{item.name}} :: {{item.type}}</span>
+                </md-autocomplete>
+                <md-chip-template>
+                  <span>
+                    <strong>{{$chip.name}}</strong>
+                    <em>({{$chip.type}} / ${{$chip.cost}})</em>
+                  </span>
+                </md-chip-template>
+              </md-chips>
+              <md-list
+                layout="row"
+                layout-sm="column"
+                layout-wrap>
+                <md-list-item class="md-2-line veggie-option"
+                              ng-repeat="item in $ctrl.items"
+                              flex-gt-sm="20"
+                              flex-sm="100">
+                  <div class="md-item-text md-whiteframe-z1" flex>
+                    <h3>{{item.name}}</h3>
+                    <p>{{item.type}} / ${{item.cost}}</p>
+                  </div>
+                </md-list-item>
+              </md-list>
+            </md-input-container>
+          </div>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-primary" type="submit">
+            Оформить
+          </md-button>
+        </md-card-actions>
+      </form>
+    </md-card>
+  </md-content>
+</div>
+

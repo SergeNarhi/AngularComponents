@@ -1,0 +1,16 @@
+{
+  "apps": [
+    {
+      "name": "API",
+      "script": "server/server.js",
+      "watch": true,
+      "ignore_watch": [
+        "client",
+        "storage",
+        "node_modules",
+        "bower_components",
+        ".*"
+      ]
+    }
+  ]
+}

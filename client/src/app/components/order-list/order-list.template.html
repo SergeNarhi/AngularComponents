@@ -1,0 +1,46 @@
+<div class="anim-zoom-out">
+
+  <md-content class="md-padding">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Список заказов</span>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <div flex>
+          <strong>Фильтр: </strong>
+          <md-datepicker ng-model="$ctrl.dateFilterValue"
+                         md-placeholder="Фильтровать"
+                         md-open-on-focus></md-datepicker>
+          <md-button
+            class="md-icon-button launch"
+            ng-click="$ctrl.clearFilter()"
+            ng-if="$ctrl.dateFilterValue">
+            <md-icon> clear</md-icon>
+          </md-button>
+        </div>
+        <md-list flex>
+          <md-list-item class="md-2-line"
+                        layout="row"
+                        layout-align="start center"
+                        ng-repeat="order in filtered = $ctrl.dateFiltered($ctrl.dateFilterValue)"
+                        ng-click="$ctrl.viewOrder(order, $event)">
+            <div class="md-list-item-text">
+              <h3>{{order.client.name}} <em>/ ${{order.summ}}</em></h3>
+              <p>{{order.addressFrom}}</p>
+            </div>
+          </md-list-item>
+          <md-list-item class="md-2-line"
+                        layout="row"
+                        layout-align="start center"
+                        ng-if="!filtered.length">
+            <div class="md-list-item-text">
+              <h3>Нет заказов<span ng-if="$ctrl.dateFilterValue">, соответсвующих заданным условиям</span></h3>
+            </div>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+    </md-card>
+  </md-content>
+</div>

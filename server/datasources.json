@@ -1,0 +1,10 @@
+{
+  "db": {
+    "host": "db",
+    "database": "test_task",
+    "username": "test_task",
+    "password": "test_task",
+    "name": "db",
+    "connector": "postgresql"
+  }
+}

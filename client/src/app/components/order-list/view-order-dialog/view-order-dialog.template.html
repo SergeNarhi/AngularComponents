@@ -1,0 +1,65 @@
+<md-dialog aria-label="Заказ #{{ctrl.order.id}}">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Заказ #{{ctrl.order.id}}</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row" layout-xs="column">
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Клиент:</strong>
+            <em>{{ctrl.order.client.name}}</em>
+          </div>
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Телефон:</strong>
+            <em>{{ctrl.order.client.phone}}</em>
+          </div>
+        </div>
+        <div layout="row" layout-xs="column">
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Адрес вывоза:</strong>
+            <em>{{ctrl.order.addressTo}}</em>
+          </div>
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Адрес доставки:</strong>
+            <em>{{ctrl.order.addressTo}}</em>
+          </div>
+        </div>
+        <div layout="row" layout-xs="column">
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Дата вывоза:</strong>
+            <em>{{ctrl.order.dateFrom | date : 'dd.MM.yy hh:mm'}}</em>
+          </div>
+          <div class="md-padding" flex-gt-xs="50" flex>
+            <strong>Дата доставки:</strong>
+            <em>{{ctrl.order.dateTo | date : 'dd.MM.yy hh:mm'}}</em>
+          </div>
+        </div>
+        <div layout="row" layout-xs="column">
+          <div class="md-padding" flex>
+            <strong>Позиции на сумму ${{ctrl.order.summ}}:</strong>
+            <md-chips ng-model="ctrl.order.items"
+                      readonly="true"
+                      flex>
+              <md-chip-template>
+                <span>
+                  <strong>{{$chip.name}}</strong>
+                  <em>({{$chip.type}} / ${{$chip.cost}})</em>
+                </span>
+              </md-chip-template>
+            </md-chips>
+          </div>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="ctrl.close()">
+        Закрыть
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

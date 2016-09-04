@@ -1,0 +1,24 @@
+test-task-web:
+  dockerfile: Dockerfile
+  build: .
+  working_dir: /home/build
+  command: bash -c "npm i && pm2 start ecosystem.json --no-daemon & cd client && npm i && bower i --allow-root && npm run serve"
+  volumes:
+    - ./:/home/build
+  links:
+    - test-task-db:db
+  ports:
+     - "3000:3000" #frontend
+     - "3001:3001" #browserSync
+     - "7000:7000" #backend
+  environment:
+    - NODE_ENV=loc
+
+test-task-db:
+  image: postgres
+  ports:
+   - "5432:5432"
+  environment:
+   - POSTGRES_USER=test_task
+   - POSTGRES_PASSWORD=test_task
+   - POSTGRES_DB=test_task

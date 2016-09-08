@@ -39,5 +39,9 @@
   "Client": {
     "dataSource": "db",
     "public": true
+  },
+  "Service": {
+    "dataSource": "db",
+    "public": true
   }
 }

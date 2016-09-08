@@ -5,6 +5,9 @@
     .module('app')
     .component('order', {
       templateUrl: 'app/components/order/order.template.html',
+      bindings: {
+        services: '<'
+      },
       controller: OrderController
     });
 
@@ -15,6 +18,11 @@
     vm.searchText = null;
     vm.items = loadItems();
 
+    // TODO: Move to service.
+    /**
+     * Initialize static items.
+     * @returns {Array}
+     */
     function loadItems() {
       var initialItems = [
         {
@@ -51,18 +59,27 @@
       });
     }
 
-    vm.order = {
-      client: {
-        name: '',
-        phone: ''
-      },
-      addressFrom: '',
-      addressTo: '',
-      dateFrom: '',
-      dateTo: '',
-      items: []
+    vm.initOrder = function () {
+      return {
+        client: {
+          name: '',
+          phone: ''
+        },
+        service: '',
+        addressFrom: '',
+        addressTo: '',
+        dateFrom: '',
+        dateTo: '',
+        items: []
+      };
     };
 
+    vm.order = vm.initOrder();
+
+    /**
+     * Show toast notification for 3s.
+     * @param message Message to show.
+     */
     vm.toast = function (message) {
       $mdToast.show(
         $mdToast.simple()
@@ -75,9 +92,17 @@
       );
     };
 
-    vm.addOrder = function () {
+    /**
+     * Send order to server.
+     */
+    vm.addOrder = function (form) {
       OrderService.add(vm.order).$promise
         .then(function () {
+          vm.order = vm.initOrder();
+          if (form) {
+            form.$setPristine();
+            form.$setUntouched();
+          }
           vm.toast('Заказ добавлен!');
         })
         .catch(function () {

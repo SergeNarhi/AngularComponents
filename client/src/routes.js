@@ -9,7 +9,12 @@ function routesConfig($stateProvider, $urlRouterProvider, $locationProvider) {
   $stateProvider
     .state('order', {
       url: '/',
-      component: 'order'
+      component: 'order',
+      resolve: {
+        services: function (OrderService) {
+          return OrderService.listServices().$promise;
+        }
+      }
     })
     .state('order-list', {
       url: '/orders',

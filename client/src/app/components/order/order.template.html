@@ -7,7 +7,7 @@
           <span class="md-headline">Новый заказ</span>
         </md-card-title-text>
       </md-card-title>
-      <form name="orderForm" ng-submit="$ctrl.addOrder()">
+      <form name="orderForm" ng-submit="$ctrl.addOrder(orderForm)">
         <md-card-content>
           <div layout-gt-sm="row">
             <md-input-container class="md-block" flex-gt-sm>
@@ -58,23 +58,26 @@
                 <div ng-message="required">Обязательно к заполнению.</div>
               </div>
             </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm ng-cloak>
+              <md-select placeholder="Выберите прачечную"
+                         ng-model="$ctrl.order.service"
+                         style="min-width: 200px;">
+                <md-option ng-value="service"
+                           ng-repeat="service in $ctrl.services">{{service.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
           </div>
           <div layout-gt-sm="row">
             <md-input-container class="md-block" flex-gt-sm>
               <md-datepicker ng-model="$ctrl.order.dateFrom"
                              md-placeholder="Дата вывоза"
                              md-open-on-focus></md-datepicker>
-              <div ng-messages="orderForm.dateFrom.$error" role="alert">
-                <div ng-message="required">Обязательно к заполнению.</div>
-              </div>
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
               <md-datepicker ng-model="$ctrl.order.dateTo"
                              md-placeholder="Дата доставки"
                              md-open-on-focus></md-datepicker>
-              <div ng-messages="orderForm.dateTo.$error" role="alert">
-                <div ng-message="required">Обязательно к заполнению.</div>
-              </div>
             </md-input-container>
           </div>
           <div layout-gt-sm="row">

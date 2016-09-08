@@ -4,8 +4,9 @@ var MAX_LIMIT = 10;
 
 module.exports = function (Order) {
   Order.add = function (order, cb) {
-    console.log(arguments)
+    console.log(arguments);
     var newClient = order.client;
+    var service = order.service;
     var newOrder = {
       addressFrom: order.addressFrom,
       addressTo: order.addressTo,
@@ -20,6 +21,12 @@ module.exports = function (Order) {
       return cb(clientError);
     }
 
+    if (!service.id) {
+      var serviceError = new Error('Invalid service data');
+      serviceError.statusCode = 400;
+      return cb(serviceError);
+    }
+
     if (
       !newOrder.addressFrom || !newOrder.addressTo || !newOrder.dateFrom || !newOrder.dateTo || newOrder.items.length === 0
     ) {
@@ -28,12 +35,17 @@ module.exports = function (Order) {
       return cb(orderError);
     }
 
-    app.models.Client.create(newClient, function (err, savedClient) {
+    app.models.Service.findById(service.id, function (err, existedService) {
       if (err) return cb(err);
 
-      newOrder.clientId = savedClient.id;
-      Order.create(newOrder, function (err, savedOrder) {
-        cb(err, savedOrder);
+      app.models.Client.create(newClient, function (err, savedClient) {
+        if (err) return cb(err);
+
+        newOrder.clientId = savedClient.id;
+        newOrder.serviceId = existedService.id;
+        Order.create(newOrder, function (err, savedOrder) {
+          cb(err, savedOrder);
+        });
       });
     });
   };
@@ -57,12 +69,7 @@ module.exports = function (Order) {
       limit: MAX_LIMIT,
       order: 'dateFrom desc',
       where: {},
-      include: {
-        relation: 'client',
-        scope: {
-          fields: ['name', 'phone', 'id']
-        }
-      }
+      include: ['client', 'service']
     };
 
     if (pageOptions) {
@@ -90,4 +97,5 @@ module.exports = function (Order) {
       ]
     }
   );
-};
+}
+;

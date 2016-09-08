@@ -15,6 +15,9 @@
     "clientId": {
       "type": "number"
     },
+    "serviceId": {
+      "type": "number"
+    },
     "dateFrom": {
       "type": "date"
     },
@@ -32,6 +35,11 @@
     "client": {
       "type": "belongsTo",
       "model": "Client",
+      "foreignKey": ""
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "Service",
       "foreignKey": ""
     }
   },

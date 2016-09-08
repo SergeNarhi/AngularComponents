@@ -1,5 +1,5 @@
 {
-  "name": "Client",
+  "name": "Service",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -9,15 +9,15 @@
     "name": {
       "type": "string"
     },
-    "phone": {
+    "address": {
       "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "services": {
+    "clients": {
       "type": "hasMany",
-      "model": "Service",
+      "model": "Client",
       "foreignKey": "",
       "through": "Order"
     }

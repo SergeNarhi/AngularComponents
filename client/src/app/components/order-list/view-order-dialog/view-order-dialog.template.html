@@ -40,6 +40,12 @@
         </div>
         <div layout="row" layout-xs="column">
           <div class="md-padding" flex>
+            <strong>Прачечная:</strong>
+            <em>{{ctrl.order.service.name}}</em>
+          </div>
+        </div>
+        <div layout="row" layout-xs="column">
+          <div class="md-padding" flex>
             <strong>Позиции на сумму ${{ctrl.order.summ}}:</strong>
             <md-chips ng-model="ctrl.order.items"
                       readonly="true"
